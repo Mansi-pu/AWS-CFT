@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation Template to deploy EC2 Instance
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: ami-07620139298af599e	
+      KeyName: !Ref NewKeyPair
+      InstanceType: t2.micro
+      SecurityGroupIds: 
+      - sg-0d6b8fa7e97a83280
+  NewKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: LinuxKey
