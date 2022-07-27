@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template to attach an IAM role to an EC2 instance
+   
+Parameters:
+
+  ImageId:
+    Type: String
+    Description: 'Linux 2 AMI'
+    Default: 'ami-07620139298af599e'
+  InstanceType:
+    Type: String
+    Description: Choosing  t2 micro because it is free
+    Default: t2.micro
+  KeyName:
+    Description: Keypair to login to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: demokey
+
+Resources:
+  DemoInstance:
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: !Ref ImageId
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+  DemoEc2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: demo-ec2-instance-role
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
